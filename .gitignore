@@ -56,3 +56,9 @@ temp/
 
 *.codekit
 *.scssc
+
+### Sass template
+.sass-cache
+*.css.map
+
+
