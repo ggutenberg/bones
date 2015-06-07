@@ -14,6 +14,31 @@ require_once( 'library/bones.php' );
 // CUSTOMIZE THE WORDPRESS ADMIN (off by default)
 // require_once( 'library/admin.php' );
 
+
+function gg_debug( $thing ) {
+	echo '<pre>' . htmlspecialchars( print_r( $thing, true ) ) . '</pre>';
+}
+
+add_action( 'init', 'cmb_initialize_cmb_meta_boxes', 9999 );
+/**
+ * Initialize the metabox class.
+ */
+function cmb_initialize_cmb_meta_boxes() {
+
+	if ( ! class_exists( 'cmb_Meta_Box' ) )
+		require_once 'library/metabox/init.php';
+
+}
+
+// Flush rewrite rules for custom post types
+add_action( 'after_switch_theme', 'bones_flush_rewrite_rules' );
+
+// Flush your rewrite rules
+function bones_flush_rewrite_rules() {
+	flush_rewrite_rules();
+}
+
+
 /*********************
 LAUNCH BONES
 Let's get everything up and running.
@@ -27,8 +52,12 @@ function bones_ahoy() {
   // let's get language support going, if you need it
   load_theme_textdomain( 'bonestheme', get_template_directory() . '/library/translation' );
 
+	require_once( 'example-functions.php' );
+
   // USE THIS TEMPLATE TO CREATE CUSTOM POST TYPES EASILY
-  require_once( 'library/custom-post-type.php' );
+//	require_once( 'library/custom-post-type.php' );
+	require_once( 'custom-post-type_menu-item.php' );
+	require_once( 'custom-post-type_special.php' );
 
   // launching operation cleanup
   add_action( 'init', 'bones_head_cleanup' );
